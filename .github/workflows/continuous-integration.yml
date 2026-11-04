@@ -13,10 +13,17 @@ jobs:
     with:
       mago-version: "1.59.0"
       php-versions: '["8.3", "8.4", "8.5"]'
-      run-integration: false
+      run-integration: true
       enable-codecov: false
       enable-composer-audit: true
       enable-infection: true
       infection-diff-on-pull-requests: true
       min-msi: "100"
       min-covered-msi: "100"
+      boot-cms: true
+      boot-cms-pages: >-
+        [
+          "/admin/settings/common/index/category/integration/section/mailchimp",
+          "/admin/extension/mailchimp/sync",
+          "/admin/extension/mailchimp/bindings"
+        ]

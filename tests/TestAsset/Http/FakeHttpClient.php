@@ -30,6 +30,14 @@ final class FakeHttpClient implements ClientInterface
         $this->answers = $answers;
     }
 
+    /**
+     * Queues more answers, after any still waiting.
+     */
+    public function answer(ResponseInterface|ClientExceptionInterface ...$answers): void
+    {
+        $this->answers = [...$this->answers, ...$answers];
+    }
+
     #[Override]
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
