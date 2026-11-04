@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdd2057153c9d4b69983d68b56724488",
+    "content-hash": "dd103963652850e342aa89ba6a47d4e6",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -57,16 +57,16 @@
         },
         {
             "name": "contenir/contenir-audience",
-            "version": "dev-main",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contenir/contenir-audience.git",
-                "reference": "d78b54fddb0a3238d30bd826d438084faa397212"
+                "reference": "f56a737e4044705d5a72b0b59a5ae90bc9add080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contenir/contenir-audience/zipball/d78b54fddb0a3238d30bd826d438084faa397212",
-                "reference": "d78b54fddb0a3238d30bd826d438084faa397212",
+                "url": "https://api.github.com/repos/contenir/contenir-audience/zipball/f56a737e4044705d5a72b0b59a5ae90bc9add080",
+                "reference": "f56a737e4044705d5a72b0b59a5ae90bc9add080",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,6 @@
                 "php-db/phpdb-sqlite": "0.3.x-dev",
                 "phpunit/phpunit": "^11.5.42"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -152,7 +151,79 @@
                 "issues": "https://github.com/contenir/contenir-audience/issues",
                 "source": "https://github.com/contenir/contenir-audience"
             },
-            "time": "2026-11-04T02:37:52+00:00"
+            "time": "2026-11-04T04:47:26+00:00"
+        },
+        {
+            "name": "contenir/contenir-extension-api",
+            "version": "v0.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contenir/contenir-extension-api.git",
+                "reference": "889910de717118c95dac317e395a098b0fbd08bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contenir/contenir-extension-api/zipball/889910de717118c95dac317e395a098b0fbd08bc",
+                "reference": "889910de717118c95dac317e395a098b0fbd08bc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/clock": "^1.0",
+                "psr/container": "^1.1 || ^2.0",
+                "psr/event-dispatcher": "^1.0",
+                "psr/http-factory": "^1.1",
+                "psr/http-message": "^1.1 || ^2.0",
+                "psr/log": "^2.0 || ^3.0"
+            },
+            "replace": {
+                "contenir/extension-api": "self.version"
+            },
+            "require-dev": {
+                "contenir/contenir-qa-tools": "0.1.x-dev",
+                "contenir/contenir-storage": "^2.2",
+                "infection/infection": "^0.34.1",
+                "nyholm/psr7": "^1.8.2",
+                "phpunit/phpunit": "^11.5.42"
+            },
+            "suggest": {
+                "contenir/contenir-storage": "Lets a test lend an add-on storage with the private profile (Testing\\MemoryStorage), as a host lends its own",
+                "nyholm/psr7": "A PSR-7 and PSR-17 implementation for the in-memory host (Testing\\InMemoryHost), or use any other",
+                "phpunit/phpunit": "Runs the conformance suite (Conformance\\Abstract*ConformanceTestCase) against a host"
+            },
+            "bin": [
+                "bin/extension-boundary"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "0.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contenir\\Extension\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "The add-on API for Contenir CMS: the contracts add-ons build against, the event catalogue, a conformance suite for hosts and an in-memory host. Framework free: PSR-3, PSR-7, PSR-11, PSR-14 and PSR-20 only.",
+            "homepage": "https://contenir.com.au",
+            "keywords": [
+                "add-on",
+                "cms",
+                "contenir",
+                "extension",
+                "plugin"
+            ],
+            "support": {
+                "issues": "https://github.com/contenir/contenir-extension-api/issues",
+                "source": "https://github.com/contenir/contenir-extension-api"
+            },
+            "time": "2026-10-28T09:19:42+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -756,12 +827,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-db/phpdb.git",
-                "reference": "b9603a7d7cf4a65537a77ef49b30506e01dd936d"
+                "reference": "680459a92e170ea8e67626626e246475a699d5ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-db/phpdb/zipball/b9603a7d7cf4a65537a77ef49b30506e01dd936d",
-                "reference": "b9603a7d7cf4a65537a77ef49b30506e01dd936d",
+                "url": "https://api.github.com/repos/php-db/phpdb/zipball/680459a92e170ea8e67626626e246475a699d5ef",
+                "reference": "680459a92e170ea8e67626626e246475a699d5ef",
                 "shasum": ""
             },
             "require": {
@@ -815,7 +886,7 @@
                 "issues": "https://github.com/php-db/phpdb/issues",
                 "source": "https://github.com/php-db/phpdb"
             },
-            "time": "2026-11-04T01:50:30+00:00"
+            "time": "2026-11-04T03:24:07+00:00"
         },
         {
             "name": "psr/clock",
@@ -917,6 +988,56 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "psr/event-dispatcher",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/event-dispatcher.git",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\EventDispatcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Standard interfaces for event handling.",
+            "keywords": [
+                "events",
+                "psr",
+                "psr-14"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/event-dispatcher/issues",
+                "source": "https://github.com/php-fig/event-dispatcher/tree/1.0.0"
+            },
+            "time": "2019-01-08T18:20:26+00:00"
         },
         {
             "name": "psr/http-client",
@@ -3116,6 +3237,65 @@
                 "source": "https://github.com/phar-io/version/tree/3.2.1"
             },
             "time": "2022-02-21T01:04:05+00:00"
+        },
+        {
+            "name": "php-db/phpdb-sqlite",
+            "version": "0.3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-db/phpdb-sqlite.git",
+                "reference": "8bfcfaa2f7859108f374d59cf1596c1a56417526"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-db/phpdb-sqlite/zipball/8bfcfaa2f7859108f374d59cf1596c1a56417526",
+                "reference": "8bfcfaa2f7859108f374d59cf1596c1a56417526",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
+                "php-db/phpdb": "^0.6.0",
+                "webmozart/assert": "^1.12.0 || ^2.0"
+            },
+            "require-dev": {
+                "ext-pdo": "*",
+                "ext-pdo_sqlite": "*",
+                "infection/infection": "^0.34.1",
+                "php-db/phpdb-qa-tools": "0.1.x-dev",
+                "phpunit/phpunit": "^11.5.42"
+            },
+            "suggest": {
+                "laminas/laminas-servicemanager": "Laminas\\ServiceManager component"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "PhpDb\\Sqlite\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpDb\\Sqlite\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "SQLite support for php-db",
+            "homepage": "https://github.com/php-db/phpdb-sqlite/discussions",
+            "keywords": [
+                "db",
+                "php-db",
+                "sqlite"
+            ],
+            "support": {
+                "forum": "https://github.com/php-db/phpdb-sqlite/discussions",
+                "issues": "https://github.com/php-db/phpdb-sqlite/issues",
+                "source": "https://github.com/php-db/phpdb-sqlite"
+            },
+            "time": "2026-09-09T04:39:44+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5415,7 +5595,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "contenir/contenir-qa-tools": 20
+        "contenir/contenir-qa-tools": 20,
+        "php-db/phpdb-sqlite": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

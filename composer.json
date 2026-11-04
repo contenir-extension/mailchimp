@@ -24,16 +24,21 @@
     "require": {
         "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
         "contenir/contenir-audience": "^0.1",
+        "contenir/contenir-extension-api": "^0.7.5",
         "guzzlehttp/guzzle": "^7.9",
+        "php-db/phpdb": "^0.6.0",
         "psr/clock": "^1.0",
+        "psr/container": "^1.1 || ^2.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1",
-        "psr/http-message": "^1.1 || ^2.0"
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/log": "^3.0.2"
     },
     "require-dev": {
         "contenir/contenir-qa-tools": "0.1.x-dev",
         "infection/infection": "^0.34.1",
         "nyholm/psr7": "^1.8.2",
+        "php-db/phpdb-sqlite": "0.3.x-dev",
         "phpunit/phpunit": "^11.5.42"
     },
     "autoload": {
@@ -47,15 +52,18 @@
         }
     },
     "scripts": {
+        "boundary": "extension-boundary",
         "check": [
             "@cs-check",
             "@static-analysis",
             "@test",
+            "@test-integration",
             "@mutation-test"
         ],
         "cs-check": [
             "mago format --check",
-            "mago lint"
+            "mago lint",
+            "mago guard"
         ],
         "cs-fix": [
             "mago format",
@@ -63,10 +71,15 @@
         ],
         "static-analysis": "mago analyze",
         "test": "phpunit --colors=always --testsuite unit",
+        "test-integration": "phpunit --colors=always --testsuite integration",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "mutation-test": "infection"
     },
     "extra": {
+        "contenir": {
+            "handle": "mailchimp",
+            "extension": "Contenir\\Extension\\Mailchimp\\MailchimpExtension"
+        },
         "branch-alias": {
             "dev-main": "0.1.x-dev"
         }

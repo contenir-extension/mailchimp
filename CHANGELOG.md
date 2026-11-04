@@ -14,3 +14,8 @@ adheres to [Semantic Versioning](https://semver.org/).
 - The webhook receiver: registers for unsubscribes, cleaned and changed addresses, answers
   Mailchimp's check, verifies the HMAC signature when the secret is held, and checks each call is
   for the binding's audience.
+- The add-on: a settings section with the API key and the webhook's secret, and Test connection, Sync all now and
+  Re-register webhooks; the sync-record and remove-record listeners; the drain schedule; the events webhook, which
+  checks each call's signature against the secret Mailchimp gave as the webhook was registered; the library's tables
+  under `ext_mailchimp_`; the Sync and Bindings screens; and checks for the setup, the connection, the outbox and the
+  webhooks.

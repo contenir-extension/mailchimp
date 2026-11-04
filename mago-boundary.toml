@@ -1,0 +1,54 @@
+# Written by vendor/bin/extension-boundary from composer.json. Run it again after changing
+# dependencies; the add-on's tests check this file is current.
+
+[[guard.perimeter.rules]]
+namespace = 'Contenir\Extension\Mailchimp\'
+permit = [
+    '@native',
+    'Contenir\Extension\Api\**',
+    'Psr\Clock\**',
+    'Psr\Container\**',
+    'Psr\EventDispatcher\**',
+    'Psr\Http\Message\**',
+    'Psr\Log\**',
+    'Contenir\Extension\Mailchimp\**',
+    'Contenir\Audience\**',
+    'GuzzleHttp\**',
+    'PhpDb\**',
+    'CustomRule\PHPUnit\**',
+    'Psr\Http\Client\**',
+]
+
+[[guard.perimeter.rules]]
+namespace = 'Contenir\Extension\Mailchimp\Tests\'
+permit = [
+    '@all',
+]
+
+[[guard.perimeter.restrictions]]
+dependency = 'Contenir\Extension\Api\Boundary\**'
+allow-from = [
+    'Contenir\Extension\Api\**',
+    'Contenir\Extension\Mailchimp\Tests\**',
+]
+
+[[guard.perimeter.restrictions]]
+dependency = 'Contenir\Extension\Api\Conformance\**'
+allow-from = [
+    'Contenir\Extension\Api\**',
+    'Contenir\Extension\Mailchimp\Tests\**',
+]
+
+[[guard.perimeter.restrictions]]
+dependency = 'Contenir\Extension\Api\Internal\**'
+allow-from = [
+    'Contenir\Extension\Api\**',
+    'Contenir\Extension\Mailchimp\Tests\**',
+]
+
+[[guard.perimeter.restrictions]]
+dependency = 'Contenir\Extension\Api\Testing\**'
+allow-from = [
+    'Contenir\Extension\Api\**',
+    'Contenir\Extension\Mailchimp\Tests\**',
+]

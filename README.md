@@ -1,12 +1,81 @@
 # Mailchimp for Contenir CMS
 
-Keeps a Mailchimp audience in step with a site's sign-ups and CMS records, through
-[contenir/contenir-audience](https://github.com/contenir/contenir-audience)'s outbox, and hears
-back about unsubscribes, cleaned addresses, complaints and changed addresses through a webhook.
+[![Continuous Integration](https://github.com/contenir-extension/mailchimp/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/contenir-extension/mailchimp/actions/workflows/continuous-integration.yml)
 
-This release holds the service half only: the adapter and the webhook receiver the shared sync
-rules call. The add-on itself (settings, listeners, the drain schedule, screens and checks) comes
-next.
+Keeps a Mailchimp account's audiences in step with a site's sign-ups and CMS records, through
+[contenir/contenir-audience](https://github.com/contenir/contenir-audience)'s outbox, and hears back about unsubscribes,
+cleaned addresses and changed addresses through a signed webhook. A sign-up or a save only writes a row in the site's
+database; the CMS's job runner sends it within the minute, so a slow or failing Mailchimp never slows a page or a save.
+
+## Setting it up
+
+1. Enable the add-on. Its tables are created at the next sign-in, in the site's database, under `ext_mailchimp_`.
+2. Write the add-on's config file. `config/autoload/extensions/mailchimp.global.php` holds the bindings, and
+   `mailchimp.local.php`, never committed, the pepper the email hashes are made with. The update check offers a
+   fresh pepper to copy. A Mezzio site that signs people up through
+   [contenir-audience-mezzio](https://github.com/contenir/contenir-audience-mezzio) reads the same two files and must
+   use the same pepper.
+
+   ```php
+   return ['extensions' => ['mailchimp' => ['bindings' => [
+       'newsletter' => [
+           'list'    => 'a1b2c3…',
+           'fields'  => ['FNAME' => ['from' => 'name', 'transforms' => ['trim', 'first-name']]],
+           'consent' => 'Signing up to the newsletter',
+           'tags'    => ['website'],
+       ],
+       'members' => [
+           'list'    => 'd4e5f6…',
+           'source'  => 'library.members.member',
+           'consent' => 'Members who tick Newsletter',
+           'options' => ['consent_field' => 'newsletter'],
+       ],
+   ]]]];
+   ```
+
+3. In Site Settings > Integration > Mailchimp, enter the API key, save, and press Test connection. The key ends with
+   the account's data centre, such as `-us21`.
+4. For a section binding, bind the listeners in the section's `admin.xml`:
+
+   ```xml
+   <events>
+       <listen extension="mailchimp" listener="sync-record" event="RecordPostSave"/>
+       <listen extension="mailchimp" listener="remove-record" event="RecordPostDelete"/>
+   </events>
+   ```
+
+5. Press Re-register webhooks. It makes the webhook's secret the first time, registers each binding's audience at
+   `/api/extension/mailchimp/events` on the site's own address (`site.url`), and keeps the secret Mailchimp signs each
+   webhook's calls with, which Mailchimp gives only then. The site's web server must send `/api/extension/` to the
+   CMS's `admin.php`, past any Basic Auth, and answer Mailchimp's GET check there.
+
+## What it adds
+
+| Extension point | What |
+|---|---|
+| Settings section | Integration > Mailchimp: the API key (masked, in local settings) and the webhook's secret (masked). Buttons: Test connection, Sync all now, Re-register webhooks. |
+| Listeners | `sync-record` on `RecordPostSave` and `remove-record` on `RecordPostDelete`, run as the record is saved, since writing a row is quick. |
+| Schedule | `drain`, every minute: sends what's due for up to 40 seconds, then deletes sent messages after 7 days and failed ones after 30. |
+| Webhook | `events`, at `/api/extension/mailchimp/events?binding=<name>&key=<secret>`. A call without the secret is refused before anything runs. A call for another audience is refused, and so is one whose signature doesn't match the secret Mailchimp gave when the webhook was registered (passed to the receiver as the binding option `signing_secret`). |
+| Migrations | The library's outbox, sync state, suppression, consent and webhook tables, under `ext_mailchimp_`, on the site's database. |
+| Screens | Sync, at `/admin/extension/mailchimp/sync`: the counts, and the dead, failed and waiting messages with their last error, to retry or remove. Bindings, at `/admin/extension/mailchimp/bindings`: read-only, exactly what each binding sends. |
+| Checks | Setup (config file and pepper), connection (with a way to the settings when the key is refused), the outbox (failed and dead messages) and the webhooks (not registered, or deleted at Mailchimp). |
+
+### What a saved record does
+
+A section binding names the record's consent checkbox with the option `consent_field`; without one, being in the
+section is the consent.
+
+| The save | Queues |
+|---|---|
+| A new record, or the checkbox just ticked | a subscribe, with the binding's `consent` wording as fresh consent from the record |
+| Any other save while ticked | an update, which reaches only someone already on the list |
+| The checkbox just unticked | a removal, as `on_delete` says |
+| A changed address | a removal of the old one, and the new one as fresh consent while ticked |
+| A deleted record | a removal, as `on_delete` says: `archive` by default (MCH-1), `unsubscribe` keeps them unsubscribed, `keep` leaves them |
+
+Someone who unsubscribed, bounced or complained is never subscribed again without fresh consent, or at all after a
+complaint or deletion.
 
 ## How it talks to Mailchimp
 
