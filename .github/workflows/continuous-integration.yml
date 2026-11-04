@@ -1,0 +1,22 @@
+name: "Continuous Integration"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  qa:
+    uses: contenir/contenir-qa-tools/.github/workflows/continuous-integration.yml@0.1.x
+    # By name: secrets: inherit doesn't cross from contenir-extension to contenir.
+    secrets:
+      AUTODEV_APP_PRIVATE_KEY: ${{ secrets.AUTODEV_APP_PRIVATE_KEY }}
+    with:
+      mago-version: "1.59.0"
+      php-versions: '["8.3", "8.4", "8.5"]'
+      run-integration: false
+      enable-codecov: false
+      enable-composer-audit: true
+      enable-infection: true
+      infection-diff-on-pull-requests: true
+      min-msi: "100"
+      min-covered-msi: "100"
